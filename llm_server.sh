@@ -9,7 +9,6 @@ until vllm serve neuralmagic-ent/Llama-3.3-70B-Instruct-quantized.w8a8 \
   --enable-chunked-prefill \
   --max_num_batched_tokens 8192 \
   --gpu_memory_utilization 0.7 \
-  --disable-log-requests \
   --tool-parser-plugin custom_llama_tool_parser.py; do
   echo "vLLM serve failed to start, retrying in 5 seconds..."
   sleep 5
