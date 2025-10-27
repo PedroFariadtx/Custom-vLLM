@@ -6,8 +6,8 @@ services:
     gpus: all
     volumes:
       - ~/.cache/huggingface:/root/.cache/huggingface
-      - ./custom_llama_tool_parser.py:/app/custom_llama_tool_parser.py
-      - ./tool_chat_template_llama3.1_json.jinja:/app/tool_chat_template_llama3.1_json.jinja
+      - ./llama/custom_llama_tool_parser.py:/app/custom_llama_tool_parser.py
+      - ./llama/tool_chat_template_llama3.1_json.jinja:/app/tool_chat_template_llama3.1_json.jinja
     ports:
       - "8081:8000"
     shm_size: '64gb'
