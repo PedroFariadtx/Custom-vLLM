@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "formatters": {
+    "vllm": {
+      "class": "vllm.logging_utils.NewLineFormatter",
+      "datefmt": "%m-%d %H:%M:%S",
+      "format": "%(levelname)s %(asctime)s %(filename)s:%(lineno)d] %(message)s"
+    }
+  },
+  "handlers": {
+    "file": {
+      "class": "logging.handlers.RotatingFileHandler",
+      "filename": "/home/dtx/vllm/logs/vllm_whisper.log",
+      "maxBytes": 52428800,
+      "backupCount": 10,
+      "formatter": "vllm",
+      "level": "INFO"
+    },
+    "console": {
+      "class": "logging.StreamHandler",
+      "formatter": "vllm",
+      "level": "INFO",
+      "stream": "ext://sys.stdout"
+    }
+  },
+  "loggers": {
+    "vllm": {
+      "handlers": ["file", "console"],
+      "level": "INFO",
+      "propagate": false
+    },
+    "uvicorn.access": {
+      "level": "INFO",
+      "handlers": [
+        "console",
+        "file"
+      ],
+      "propagate": false
+    },
+    "uvicorn.error": {
+      "level": "INFO",
+      "handlers": [
+        "console",
+        "file"
+      ],
+      "propagate": false
+    }
+  }
+}

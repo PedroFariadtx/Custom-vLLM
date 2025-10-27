@@ -1,0 +1,5 @@
+FROM vllm/vllm-openai:v0.11.0
+
+# Install the optional audio dependencies matching the base image version.
+# See: https://docs.vllm.ai/en/stable/deployment/docker.html#use-vllms-official-docker-image
+RUN uv pip install --system vllm[audio]==0.11.0

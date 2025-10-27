@@ -1,4 +1,5 @@
-until vllm serve neuralmagic-ent/Llama-3.3-70B-Instruct-quantized.w8a8 \
+VLLM_LOGGING_CONFIG_PATH=/home/dtx/vllm/configs/logging/vllm_logging_llama.json \
+vllm serve neuralmagic-ent/Llama-3.3-70B-Instruct-quantized.w8a8 \
   --api-key token-abc123 \
   --port 8081 \
   --enable-auto-tool-choice \
@@ -9,7 +10,5 @@ until vllm serve neuralmagic-ent/Llama-3.3-70B-Instruct-quantized.w8a8 \
   --enable-chunked-prefill \
   --max_num_batched_tokens 8192 \
   --gpu_memory_utilization 0.7 \
-  --tool-parser-plugin custom_llama_tool_parser.py; do
-  echo "vLLM serve failed to start, retrying in 5 seconds..."
-  sleep 5
-done
+  --tensor_parallel_size=4 \
+  --tool-parser-plugin custom_llama_tool_parser.py

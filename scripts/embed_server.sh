@@ -1,0 +1,2 @@
+VLLM_LOGGING_CONFIG_PATH=/home/dtx/vllm/configs/logging/vllm_logging_qwen.json
+vllm serve Qwen/Qwen3-Embedding-0.6B --port 8083 --gpu-memory-utilization 0.04 --max-model-len 4096  --tensor_parallel_size=4  --task embed
