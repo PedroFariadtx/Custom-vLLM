@@ -1,4 +1,4 @@
-.PHONY: help clarisse-up clarisse-down qwen-vl-up qwen-vl-down clarisse qwen-vl
+.PHONY: help clarisse-up clarisse-down qwen-vl-up qwen-vl-down lara-up lara-down clarisse qwen-vl lara
 
 # Default target
 .DEFAULT_GOAL := help
@@ -11,10 +11,13 @@ help:
 	@echo "  make clarisse-down   # Stop Clarisse stack (profile: clarisse)"
 	@echo "  make qwen-vl-up      # Start Qwen VL stack (profile: qwen-vl)"
 	@echo "  make qwen-vl-down    # Stop Qwen VL stack (profile: qwen-vl)"
+	@echo "  make lara-up         # Start LARA stack (profile: lara)"
+	@echo "  make lara-down       # Stop LARA stack (profile: lara)"
 	@echo ""
 	@echo "Aliases (backwards-compatible):"
 	@echo "  make clarisse        # Alias for clarisse-up"
 	@echo "  make qwen-vl         # Alias for qwen-vl-up"
+	@echo "  make lara            # Alias for lara-up"
 
 ## Start main application stack (Clarisse)
 clarisse-up:
@@ -32,6 +35,15 @@ qwen-vl-up:
 qwen-vl-down:
 	docker compose --profile qwen-vl down
 
+## Start LARA stack
+lara-up:
+	docker compose --profile lara up -d
+
+## Stop LARA stack
+lara-down:
+	docker compose --profile lara down
+
 # Backwards-compatible aliases
 clarisse: clarisse-up
 qwen-vl: qwen-vl-up
+lara: lara-up

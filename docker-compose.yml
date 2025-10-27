@@ -22,7 +22,7 @@ services:
       --enable-prefix-caching
       --enable-chunked-prefill
       --max-num-batched-tokens 8192
-      --gpu-memory-utilization 0.7
+      --gpu-memory-utilization 0.5
       --tensor-parallel-size 4
       --tool-parser-plugin /app/custom_llama_tool_parser.py
 
@@ -88,3 +88,22 @@ services:
       --async-scheduling
       --gpu-memory-utilization 0.95
       --chat-template-content-format openai
+
+  stt-server-lara:
+    build:
+      context: .
+      dockerfile: Dockerfile.stt
+    image: vllm-openai-audio:0.11.0
+    container_name: stt-server-lara
+    profiles: ["lara"]
+    gpus: all
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    ports:
+      - "8084:8000"
+    shm_size: '8gb'
+    restart: unless-stopped
+    command: >
+      --model openai/whisper-large-v3
+      --tensor_parallel_size=4
+      --gpu-memory-utilization 0.1
