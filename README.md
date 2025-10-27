@@ -14,23 +14,34 @@ sudo systemctl restart docker
 ```
 
 
-
 # Tmux commands
 
-### Start a new tmux session named 'llm_server'
+Start a new tmux session named 'llm_server':
+```sh
 tmux new-session -s llm_server
+```
 
-### Attach to the 'llm_server' session
+Attach to the 'llm_server' session:
+```sh
 tmux attach-session -t llm_server
+```
 
-### Capture the current pane's content in the 'llm_server' session
+Capture the current pane's content in the 'llm_server' session:
+```sh
 tmux capture-pane -t llm_server -p
+```
 
-### List all tmux sessions
+List all tmux sessions:
+```sh
 tmux ls
+```
 
-### Kill the 'llm_server' session
+Kill the 'llm_server' session:
+```sh
 tmux kill-session -t llm_server
+```
 
-### Detach from the current tmux session
+Detach from the current tmux session:
+```sh
 Ctrl + b, then d
+```
