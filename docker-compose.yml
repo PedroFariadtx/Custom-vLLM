@@ -86,8 +86,26 @@ services:
       --enable-expert-parallel
       --limit-mm-per-prompt.video 0
       --async-scheduling
-      --gpu-memory-utilization 0.95
+      --gpu-memory-utilization 0.6
       --chat-template-content-format openai
+
+  gpt-oss-server:
+    image: vllm/vllm-openai:latest
+    container_name: gpt-oss-server
+    profiles: ["gpt"]
+    gpus: all
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    ports:
+      - "8085:8000"
+    shm_size: '32gb'
+    restart: unless-stopped
+    command: >
+      --model openai/gpt-oss-120b
+      --api-key token-abc123
+      --tensor-parallel-size 4
+      --async-scheduling
+      --gpu-memory-utilization 0.35
 
   stt-server-lara:
     build:
