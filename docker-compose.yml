@@ -4,10 +4,15 @@ services:
     container_name: llm-server
     profiles: ["clarisse"]
     gpus: all
+    environment:
+      - TZ=Europe/Lisbon
+      - VLLM_LOGGING_CONFIG_PATH=/app/clarisse-llm-logging.json
     volumes:
       - ~/.cache/huggingface:/root/.cache/huggingface
       - ./llama/custom_llama_tool_parser.py:/app/custom_llama_tool_parser.py
       - ./llama/tool_chat_template_llama3.1_json.jinja:/app/tool_chat_template_llama3.1_json.jinja
+      - ./configs/logging/clarisse-llm-logging.json:/app/clarisse-llm-logging.json:ro
+      - ./logs:/app/logs
     ports:
       - "8081:8000"
     shm_size: '64gb'
@@ -34,8 +39,13 @@ services:
     container_name: stt-server
     profiles: ["clarisse"]
     gpus: all
+    environment:
+      - TZ=Europe/Lisbon
+      - VLLM_LOGGING_CONFIG_PATH=/app/clarisse-stt-logging.json
     volumes:
       - ~/.cache/huggingface:/root/.cache/huggingface
+      - ./configs/logging/clarisse-stt-logging.json:/app/clarisse-stt-logging.json:ro
+      - ./logs:/app/logs
     ports:
       - "8082:8000"
     shm_size: '8gb'
@@ -49,13 +59,18 @@ services:
     image: vllm/vllm-openai:latest
     container_name: embed-server
     profiles: ["clarisse"]
+    gpus: all
+    environment:
+      - TZ=Europe/Lisbon
+      - VLLM_LOGGING_CONFIG_PATH=/app/clarisse-embed-logging.json
     volumes:
       - ~/.cache/huggingface:/root/.cache/huggingface
+      - ./configs/logging/clarisse-embed-logging.json:/app/clarisse-embed-logging.json:ro
+      - ./logs:/app/logs
     ports:
       - "8083:8000"
     shm_size: '8gb'
     restart: unless-stopped
-    gpus: all
     command: >
       --model Qwen/Qwen3-Embedding-0.6B
       --gpu-memory-utilization 0.04
@@ -69,6 +84,8 @@ services:
     container_name: qwen-vl-server
     profiles: ["qwen-vl"]
     gpus: all
+    environment:
+      - TZ=Europe/Lisbon
     volumes:
       - ~/.cache/huggingface:/root/.cache/huggingface
     ports:
@@ -94,6 +111,8 @@ services:
     container_name: gpt-oss-server
     profiles: ["gpt"]
     gpus: all
+    environment:
+      - TZ=Europe/Lisbon
     volumes:
       - ~/.cache/huggingface:/root/.cache/huggingface
     ports:
@@ -115,6 +134,8 @@ services:
     container_name: stt-server-lara
     profiles: ["lara"]
     gpus: all
+    environment:
+      - TZ=Europe/Lisbon
     volumes:
       - ~/.cache/huggingface:/root/.cache/huggingface
     ports:

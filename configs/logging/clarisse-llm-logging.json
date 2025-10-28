@@ -10,7 +10,7 @@
   "handlers": {
     "file": {
       "class": "logging.handlers.RotatingFileHandler",
-      "filename": "/home/dtx/vllm/logs/vllm_qwen.log",
+      "filename": "/app/logs/clarisse-llm.log",
       "maxBytes": 52428800,
       "backupCount": 10,
       "formatter": "vllm",
