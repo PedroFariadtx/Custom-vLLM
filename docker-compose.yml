@@ -77,6 +77,36 @@ services:
       --max-model-len 4096
       --tensor-parallel-size 4
       --task embed
+
+  image-server:
+    image: vllm/vllm-openai:latest
+    container_name: image-server
+    profiles: ["clarisse"]
+    gpus: all
+    environment:
+      - TZ=Europe/Lisbon
+      - VLLM_LOGGING_CONFIG_PATH=/app/clarisse-image-logging.json
+      - VLLM_USE_FLASHINFER_MOE_FP16=1
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+      - ./configs/logging/clarisse-image-logging.json:/app/clarisse-image-logging.json:ro
+      - ./logs:/app/logs
+    ports:
+      - "8084:8000"
+    shm_size: '32gb'
+    restart: unless-stopped
+    command: >
+      --model Qwen/Qwen3-VL-30B-A3B-Instruct
+      --api-key token-abc123
+      --tensor-parallel-size 4
+      --max-model-len 128000
+      --mm-encoder-tp-mode data
+      --mm-processor-cache-gb 0
+      --enable-expert-parallel
+      --limit-mm-per-prompt.video 0
+      --async-scheduling
+      --gpu-memory-utilization 0.2
+      --chat-template-content-format openai
   
 
   qwen-vl-server:
@@ -139,7 +169,7 @@ services:
     volumes:
       - ~/.cache/huggingface:/root/.cache/huggingface
     ports:
-      - "8084:8000"
+      - "8092:8000"
     shm_size: '8gb'
     restart: unless-stopped
     command: >
