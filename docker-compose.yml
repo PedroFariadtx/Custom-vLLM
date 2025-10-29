@@ -1,7 +1,7 @@
 services:
-  llm-server:
+  clarisse-llm-server:
     image: vllm/vllm-openai:latest
-    container_name: llm-server
+    container_name: clarisse-llm-server
     profiles: ["clarisse"]
     gpus: all
     environment:
@@ -31,12 +31,12 @@ services:
       --tensor-parallel-size 4
       --tool-parser-plugin /app/custom_llama_tool_parser.py
 
-  stt-server:
+  clarisse-stt-server:
     build:
       context: .
       dockerfile: Dockerfile.stt
     image: vllm-openai-audio:0.11.0
-    container_name: stt-server
+    container_name: clarisse-stt-server
     profiles: ["clarisse"]
     gpus: all
     environment:
@@ -55,9 +55,9 @@ services:
       --tensor-parallel-size 4
       --gpu-memory-utilization 0.1
 
-  embed-server:
+  clarisse-embed-server:
     image: vllm/vllm-openai:latest
-    container_name: embed-server
+    container_name: clarisse-embed-server
     profiles: ["clarisse"]
     gpus: all
     environment:
@@ -78,9 +78,9 @@ services:
       --tensor-parallel-size 4
       --task embed
 
-  image-server:
+  clarisse-image-server:
     image: vllm/vllm-openai:latest
-    container_name: image-server
+    container_name: clarisse-image-server
     profiles: ["clarisse"]
     gpus: all
     environment:
@@ -109,17 +109,17 @@ services:
       --chat-template-content-format openai
   
 
-  qwen-vl-server:
+  ikea-image-server:
     image: vllm/vllm-openai:latest
-    container_name: qwen-vl-server
-    profiles: ["qwen-vl"]
+    container_name: ikea-image-server
+    profiles: ["ikea"]
     gpus: all
     environment:
       - TZ=Europe/Lisbon
     volumes:
       - ~/.cache/huggingface:/root/.cache/huggingface
     ports:
-      - "8084:8000"
+      - "8094:8000"
     shm_size: '64gb'
     restart: unless-stopped
     command: >
@@ -156,12 +156,12 @@ services:
       --async-scheduling
       --gpu-memory-utilization 0.35
 
-  stt-server-lara:
+  lara-stt-server:
     build:
       context: .
       dockerfile: Dockerfile.stt
     image: vllm-openai-audio:0.11.0
-    container_name: stt-server-lara
+    container_name: lara-stt-server
     profiles: ["lara"]
     gpus: all
     environment:
