@@ -27,7 +27,7 @@ services:
       --enable-prefix-caching
       --enable-chunked-prefill
       --max-num-batched-tokens 8192
-      --gpu-memory-utilization 0.5
+      --gpu-memory-utilization 0.35
       --tensor-parallel-size 4
       --tool-parser-plugin /app/custom_llama_tool_parser.py
 
@@ -53,7 +53,7 @@ services:
     command: >
       --model fsicoli/whisper-large-v3-pt-cv19-fleurs
       --tensor-parallel-size 4
-      --gpu-memory-utilization 0.1
+      --gpu-memory-utilization 0.05
 
   clarisse-embed-server:
     image: vllm/vllm-openai:latest
@@ -105,7 +105,7 @@ services:
       --enable-expert-parallel
       --limit-mm-per-prompt.video 0
       --async-scheduling
-      --gpu-memory-utilization 0.2
+      --gpu-memory-utilization 0.15
       --chat-template-content-format openai
   
 
